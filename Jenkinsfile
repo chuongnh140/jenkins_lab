@@ -46,13 +46,12 @@ pipeline {
           sh "poetry run pytest"
         }
       }
-    
+
     stage("Deploy") {
-      agent { node {lable 'docker-machine'}}
+      agent { lable 'docker-machine'}
         steps {
-          sh "echo $DOCKER_PASSWORD | docker login --username $DOCKER_USERNAME --password-stdin"
           sh "docker pull ${DOCKER_IMAGE}:${DOCKER_TAG}"
-          sh "docker container run -d -p 8888:3000 --name ${DOCKER_IMAGE} ${DOCKER_IMAGE}:${DOCKER_TAG}"
+          sh "docker container run -d -p 8888:3000 --name ${DOCKER_IMAGE}:${DOCKER_TAG} ${DOCKER_IMAGE}:${DOCKER_TAG}"
     }
 }
 
