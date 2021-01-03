@@ -46,6 +46,7 @@ pipeline {
 	sh "ssh -i $SSH_KEY jenkins@100.0.0.134 './deploy.sh'"		
 }
   }
+}
      
   post {
     success {
