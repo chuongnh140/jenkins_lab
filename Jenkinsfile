@@ -7,7 +7,7 @@ pipeline {
   }
 
   stages {
-    stage("Test") {
+     stage("Test") {
       agent {
           docker {
             image 'python:3.8-slim-buster'
@@ -48,11 +48,12 @@ pipeline {
       }
 
     stage("Deploy") {
-      agent { lable 'docker-machine'}
+      agent {lable 'docker-machine'}
         steps {
           sh "docker pull ${DOCKER_IMAGE}:${DOCKER_TAG}"
           sh "docker container run -d -p 8888:3000 --name ${DOCKER_IMAGE}:${DOCKER_TAG} ${DOCKER_IMAGE}:${DOCKER_TAG}"
     }
+  }
 }
 
   post {
@@ -63,6 +64,5 @@ pipeline {
       echo "FAILED"
     }
   }
-}
 }
 
