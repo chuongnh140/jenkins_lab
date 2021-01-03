@@ -4,7 +4,7 @@ pipeline {
 
   environment {
     DOCKER_IMAGE = "chuongnh140/jenkins_lab"
-    DOCKER_TAG="${GIT_BRANCH.tokenize('/').pop()}-${GIT_COMMIT.substring(0,7)}"
+    //DOCKER_TAG="${GIT_BRANCH.tokenize('/').pop()}-${GIT_COMMIT.substring(0,7)}"
   }
 
   stages {
@@ -24,9 +24,9 @@ pipeline {
 
     stage("build") {
       agent { node {label 'master'}}
-      //environment {
-      //  DOCKER_TAG="${GIT_BRANCH.tokenize('/').pop()}-${GIT_COMMIT.substring(0,7)}"
-      //}
+      environment {
+        DOCKER_TAG="${GIT_BRANCH.tokenize('/').pop()}-${GIT_COMMIT.substring(0,7)}"
+      }
       steps {
         sh "docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} . "
         sh "docker tag ${DOCKER_IMAGE}:${DOCKER_TAG} ${DOCKER_IMAGE}:latest"
@@ -46,9 +46,12 @@ pipeline {
 
     stage("Deploy") {
       agent {label 'docker-machine'}
+      environment {
+        DOCKER_TAG1="${GIT_BRANCH.tokenize('/').pop()}-${GIT_COMMIT.substring(0,7)}"
+      }
         steps {
-          sh "docker pull ${DOCKER_IMAGE}:${DOCKER_TAG}"
-          sh "docker container run -d -p 8888:3000 --name ${DOCKER_IMAGE}:${DOCKER_TAG} ${DOCKER_IMAGE}:${DOCKER_TAG}"
+          sh "docker pull ${DOCKER_IMAGE}:${DOCKER_TAG1}"
+          sh "docker container run -d -p 8888:3000 --name ${DOCKER_IMAGE}:${DOCKER_TAG1} ${DOCKER_IMAGE}:${DOCKER_TAG1}"
     }
   }
 }
