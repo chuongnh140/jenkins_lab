@@ -51,7 +51,7 @@ pipeline {
       }
         steps {
           sh "docker pull ${DOCKER_IMAGE}:${DOCKER_TAG1}"
-          sh "docker container run -d -p 8888:3000 --name ${DOCKER_IMAGE}:${DOCKER_TAG1} ${DOCKER_IMAGE}:${DOCKER_TAG1}"
+          sh "docker container run -d -p 8888:3000 ${DOCKER_IMAGE}:${DOCKER_TAG1}"
     }
   }
 }
