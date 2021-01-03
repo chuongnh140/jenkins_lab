@@ -40,12 +40,8 @@ pipeline {
         sh "docker image rm ${DOCKER_IMAGE}:${DOCKER_TAG}"
         sh "docker image rm ${DOCKER_IMAGE}:latest"
       }
-        steps {
-          sh "pip install poetry"
-          sh "poetry install"
-          sh "poetry run pytest"
-        }
-      }
+        
+  }
 
     stage("Deploy") {
       agent {label 'docker-machine'}
