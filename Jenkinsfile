@@ -40,20 +40,20 @@ pipeline {
         sh "docker image rm ${DOCKER_IMAGE}:${DOCKER_TAG}"
         sh "docker image rm ${DOCKER_IMAGE}:latest"
       }
-    }
         steps {
           sh "pip install poetry"
           sh "poetry install"
           sh "poetry run pytest"
         }
       }
+    
     stage("Deploy") {
       agent { node {lable 'docker-machine'}}
         steps {
           sh "echo $DOCKER_PASSWORD | docker login --username $DOCKER_USERNAME --password-stdin"
           sh "docker pull ${DOCKER_IMAGE}:${DOCKER_TAG}"
           sh "docker container run -d -p 8888:3000 --name ${DOCKER_IMAGE} ${DOCKER_IMAGE}:${DOCKER_TAG}"
-        }
+    }
 }
 
   post {
@@ -64,5 +64,6 @@ pipeline {
       echo "FAILED"
     }
   }
+}
 }
 
