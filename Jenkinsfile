@@ -39,7 +39,7 @@ pipeline {
 
         //clean to save disk
         sh "docker image rm ${DOCKER_IMAGE}:${DOCKER_TAG}"
-        sh "docker image rm ${DOCKER_IMAGE}:latest"
+        //sh "docker image rm ${DOCKER_IMAGE}:latest"
       }
         
   }
@@ -51,7 +51,7 @@ pipeline {
       }
         steps {
           sh "docker pull ${DOCKER_IMAGE}:${DOCKER_TAG1}"
-          sh "docker container run -d -p 8888:3000 ${DOCKER_IMAGE}:${DOCKER_TAG1}"
+          sh "docker container run -d -p 8888:5000 ${DOCKER_IMAGE}:${DOCKER_TAG1}"
     }
   }
 }
