@@ -52,20 +52,19 @@ pipeline {
       }
         steps {
           sh "docker pull ${DOCKER_IMAGE}:${DOCKER_TAG1}"
-          //sh "docker container run -d -p 8888:5000 ${DOCKER_IMAGE}:${DOCKER_TAG1}"
-          sh "docker container run -d -p 8888:5000 --name hello:lo ${DOCKER_IMAGE}:${DOCKER_TAG1}"
+          sh "docker container run -d -p 8888:5000 ${DOCKER_IMAGE}:${DOCKER_TAG1}"
     }
   }
 }
 
   post {
     success {
-      echo "SUCCESSFUL nha"
+      echo "SUCCESSFUL"
     }
     failure {
       echo "FAILED"
       mail bcc: '', body: '''Something went wrong.
-      Please check it !!!''', cc: '', from: '', replyTo: '', subject: 'Notification about Jenkins jobs', to: 'chuongnh140@gmail.com'
+Please check it !!!''', cc: '', from: '', replyTo: '', subject: 'Notification about Jenkins jobs', to: 'chuongnh140@gmail.com'
     }
   }
 }
