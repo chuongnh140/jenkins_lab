@@ -35,7 +35,7 @@ pipeline {
             sh 'echo $DOCKER_PASSWORD | docker login --username $DOCKER_USERNAME --password-stdin'
             sh 'echo HelloWorld'
             sh "docker push ${DOCKER_IMAGE}:${DOCKER_TAG}"
-            sh "docker push ${DOCKER_IMAGE}:latest"
+            //sh "docker push ${DOCKER_IMAGE}:latest"
         }
 
         //clean to save disk
@@ -59,11 +59,10 @@ pipeline {
 
   post {
     success {
-      echo "SUCCESSFUL"
+      echo "SUCCESSFUL nha"
     }
     failure {
       echo "FAILED"
     }
   }
 }
-
